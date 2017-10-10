@@ -170,7 +170,7 @@ gameResult search(Color aiColor, Color** map)
 	searchStartTime = getSystemTime();
 	cacheLast.clear();
 	cache.clear();
-	for (int level = 2; level <= searchLevel; level += 2)
+	for (int level = 2; level <= searchLevel; level += 1)
 	{
 		long long t = getSystemTime();
 		nodeCount = 0;
@@ -208,7 +208,7 @@ gameResult search(Color aiColor, Color** map)
 			if (value == MAX_VALUE)
 				break;
 		}
-		if (getSystemTime() - searchStartTime > timeOut / 4) {
+		if (getSystemTime() - searchStartTime > timeOut / 2) {
 			timeOutEnable = true;
 		}
 	}
@@ -245,7 +245,12 @@ int dfs(int level, Color color, Color aiColor, int alpha, int beta) {
 	}
 	//计算扩展节点
 	points ps = getExpandPoints(data, neighbors);
-
+	//延伸
+	if (level < currentLevel - 2) {
+		if (ps.count == 1) {
+			level++;
+		}
+	}
 	//调整最优节点顺序
 	if (cacheLast.find(hashCode) != cacheLast.end()) {
 		point p = cacheLast[hashCode];
