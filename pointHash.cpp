@@ -3,15 +3,19 @@
 
 extern int boardSize;
 
+int getKey(int x, int y) {
+	return x * 100 + y;
+}
+
 void pointHash::add(int x, int y)
 {
-	signal[x][y] = true;
+	set.insert(getKey(x, y));
 	count++;
 }
 
 void pointHash::add(point p)
 {
-	signal[p.x][p.y] = true;
+	set.insert(getKey(p.x, p.y));
 	count++;
 }
 
@@ -23,12 +27,12 @@ void pointHash::addMany(points ps)
 
 bool pointHash::contains(int x, int y)
 {
-	return signal[x][y];
+	return set.find(getKey(x, y)) != set.end();
 }
 
 bool pointHash::contains(point p)
 {
-	return signal[p.x][p.y];
+	return set.find(getKey(p.x, p.y)) != set.end();
 }
 
 pointHash::pointHash()
@@ -43,12 +47,6 @@ pointHash::~pointHash()
 
 void pointHash::reset()
 {
-	for (int i = 0; i < boardSize; i++)
-	{
-		for (int j = 0; j < boardSize; j++)
-		{
-			signal[i][j] = false;
-		}
-	}
+	set.clear();
 	count = 0;
 }

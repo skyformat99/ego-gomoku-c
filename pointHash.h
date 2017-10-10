@@ -1,7 +1,8 @@
 #pragma once
+#include "unordered_set"
 class pointHash
 {
-	bool signal[20][20];
+	unordered_set<int> set;
 public:
 	int count = 0;
 	void add(int x, int y);
